@@ -1,2 +1,3 @@
 unrar
 unzip
+tqdm
