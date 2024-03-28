@@ -42,6 +42,13 @@ python main.py -t {thread_count} -b {password_book} -p {password_book_dir} ...
 
 -p {password_book_dir} 字典的所在位置
 
-### Contribution | 贡献
+## project struct | 文件结构
+
+- password_list: 密码本存储器
+- rarlib: unrar so|dll文件，目前只有m1 macOS平台编译版本，待更新，需要补充和script脚本组合
+- src: 源代码
+- main.py 主运行代码
+
+## Contribution | 贡献
 
 Mustenaka | https://github.com/Mustenaka
