@@ -159,9 +159,5 @@ cython_debug/
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 #.idea/
 
-# this project files
-origin_file/*
-origin_file/
-
 # macos
 .DS_Store
