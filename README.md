@@ -10,6 +10,14 @@ reference: https://github.com/danielmiessler/SecLists/tree/master
 
 ### Environment｜环境
 
+#### rar install:
+
+##### Windows
+
+##### macOS | Linux
+
+#### python environment
+
 ```
 pip install -r requirements.txt
 ```

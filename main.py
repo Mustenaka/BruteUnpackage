@@ -1,6 +1,6 @@
 import os
 os.environ.setdefault(
-        "UNRAR_LIB_PATH", "/rarlib/libunrar.so")   # TEMP: use .sh or .bat to export it
+        "UNRAR_LIB_PATH", "/Users/andrew/Projects/PythonProjects/Tools/brute_force_unpackage/rarlib/libunrar.so")
 
 from src.dic_unpack.dic_unpack import DicUnpack
 
