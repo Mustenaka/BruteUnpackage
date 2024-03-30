@@ -9,6 +9,7 @@ def main(file_name):
     # open file
     if not os.path.isfile(file_name):
         print("file does not exist.")
+        return
 
     # use Dictionary Unpack
     dic_unpack = DicUnpack("password_list")
@@ -19,7 +20,6 @@ def main(file_name):
 
 
 if __name__ == "__main__":
-
     # file_name = sys.argv[1]
     # main(file_name=file_name)
     main(file_name="origin_file/test.rar")
