@@ -45,3 +45,10 @@ class DicUnpack(Singleton):
         tbar = tqdm(self._txt_files)
         for line in tbar:
             tbar.set_description('Processing ' + line)
+            try:
+                with ZipFile(file_path, 'r') as zip_ref:
+                    zip_ref.extractall(pwd=line)
+                print("Found password:" + line)
+                break
+            except Exception as e:
+                pass
