@@ -1,6 +1,7 @@
 from unrar import rarfile
 from zipfile import ZipFile
 from tqdm import tqdm, trange
+import py7zr
 
 from src.dic_unpack.Singleton import Singleton
 
@@ -30,7 +31,7 @@ class DicUnpack(Singleton):
                         for line in f:
                             self._txt_files.append(line.strip())
 
-    def rar_attack(self, file_path):
+    def attack_rar(self, file_path):
         tbar = tqdm(self._txt_files)
         for line in tbar:
             tbar.set_description('Processing ' + line)
@@ -41,13 +42,25 @@ class DicUnpack(Singleton):
             except:
                 pass
 
-    def zip_attack(self, file_path):
+    def attack_zip(self, file_path):
         tbar = tqdm(self._txt_files)
         for line in tbar:
             tbar.set_description('Processing ' + line)
             try:
                 with ZipFile(file_path, 'r') as zip_ref:
                     zip_ref.extractall(pwd=line)
+                print("Found password:" + line)
+                break
+            except Exception as e:
+                pass
+
+    def attack_7z(self, file_path):
+        tbar = tqdm(self._txt_files)
+        for line in tbar:
+            tbar.set_description('Processing ' + line)
+            try:
+                with py7zr.SevenZipFile(file_path, mode='r', password=line) as z:
+                    z.extractall()
                 print("Found password:" + line)
                 break
             except Exception as e:

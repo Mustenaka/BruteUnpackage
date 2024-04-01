@@ -1,3 +1,4 @@
 unrar
 unzip
 tqdm
+py7zr
