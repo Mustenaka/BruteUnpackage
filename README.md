@@ -18,6 +18,9 @@ reference: https://github.com/danielmiessler/SecLists/tree/master
 
 #### python environment
 
+Python >= 3.5
+
+
 ```
 pip install -r requirements.txt
 ```
