@@ -1,6 +1,7 @@
 from unrar import rarfile
 from zipfile import ZipFile
 from tqdm import tqdm, trange
+from itertools import product
 import py7zr
 
 import os
@@ -14,7 +15,7 @@ class RndUnpack():
     lib_number = "1234567890"
     lib_upper_letter = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
     lib_lower_letter = "abcdefghijklmnopqrstuvwxyz"
-    lib_runtime = []
+    lib_runtime = ""
     include_upper_letter = True
     include_lower_letter = True
     include_number = True
@@ -39,6 +40,15 @@ class RndUnpack():
             self.lib_runtime.append(self.lib_speical)
 
         print("rnd init, Lib:" + self.lib_runtime)
+
+    def generatePasswordList(cnt: int) -> list:
+        # 获取输入字符串中的数字字符列表
+        digits = [char for char in self.lib_runtime if char.isdigit()]
+
+        # 生成所有可能的字符串组合
+        combinations = [''.join(comb) for comb in product(digits, repeat=cnt)]
+
+        return combinations
 
     def attack_rar(self, file_path, max_count):
         pass
