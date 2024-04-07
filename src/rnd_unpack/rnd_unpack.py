@@ -4,11 +4,6 @@ from tqdm import tqdm, trange
 from itertools import product
 import py7zr
 
-import os
-import sys
-import time
-
-
 class RndUnpack():
     upper_limit = 8
     lib_speical = "!\"#$%&'()*+,-./:;<=>?@[\]^_`{|}~"
@@ -41,7 +36,7 @@ class RndUnpack():
 
         print("rnd init, Lib:" + self.lib_runtime)
 
-    def generatePasswordList(cnt: int) -> list:
+    def generatePasswordList(self, cnt: int) -> list:
         # 获取输入字符串中的数字字符列表
         digits = [char for char in self.lib_runtime if char.isdigit()]
 
