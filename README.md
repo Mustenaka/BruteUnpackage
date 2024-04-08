@@ -1,8 +1,8 @@
 # BruteUnpackage | 暴力破解压缩包密码
 
-暴力破解压缩包密码，支持zip, rar 等主流压缩包工具（纯代码版），内置一个常见密码压缩表，密码表用尽后启动随机数便利，最大支持密码位数为127（这也是rar最大长度），自动从小开始向大破解，支持多线程，具体所需要的破解时间根据密码复杂度。
+暴力破解压缩包密码，支持zip, rar 等主流压缩包工具（纯代码版），内置一个常见密码压缩表，密码表用尽后启动随机数便利，最大支持密码位数为16，自动从小开始向大破解，支持多线程，具体所需要的破解时间根据密码复杂度。
 
-Brute force compression package password, support zip, rar and other mainstream compression package tools (pure code version), built-in a common password compression table, password table exhausted after starting random number convenience, the maximum support password number is 127 (which is also the maximum length of rar), automatically from small to large crack, support multi-threading, The time required to crack the password depends on the password complexity.
+Brute force compression package password, support zip, rar and other mainstream compression package tools (pure code version), built-in a common password compression table, password table exhausted after starting random number convenience, the maximum support password length is 16, automatically from small to large crack, support multi-threading, The time required to crack the password depends on the password complexity.
 
 ### Built-in dictionary |  内置字典
 
