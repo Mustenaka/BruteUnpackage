@@ -4,6 +4,7 @@ from tqdm import tqdm, trange
 from itertools import product
 import py7zr
 
+
 class RndUnpack():
     upper_limit = 8
     lib_speical = "!\"#$%&'()*+,-./:;<=>?@[\]^_`{|}~"
@@ -36,20 +37,49 @@ class RndUnpack():
 
         print("rnd init, Lib:" + self.lib_runtime)
 
-    def generatePasswordList(self, cnt: int) -> list:
-        # 获取输入字符串中的数字字符列表
-        digits = [char for char in self.lib_runtime if char.isdigit()]
-
-        # 生成所有可能的字符串组合
-        combinations = [''.join(comb) for comb in product(digits, repeat=cnt)]
-
-        return combinations
+    def generate_passwords(self, n) -> list:
+        # 使用itertools.product生成所有可能的排列组合
+        passwords = [''.join(combination)
+                     for combination in product(self.lib_runtime, repeat=n)]
+        return passwords
 
     def attack_rar(self, file_path, max_count):
-        pass
+        if max_count <= 1:
+            print("max_count must greater than 1")
+        elif max_count > 16:
+            print("max_count must less than 16")
+
+        print("WARRNING: max_count could not be so large, else will time-consuming")
+
+        for i in trange(1, max_count):
+            li = self.generate_passwords(i)
+            for pwd in li:
+                try:
+                    file = rarfile.RarFile(file_path, 'r', pwd=pwd)
+                    print("Found password:" + pwd)
+                    return
+                except:
+                    pass
+                    
 
     def attack_zip(self, file_path, max_count):
-        pass
+        if max_count <= 1:
+            print("max_count must greater than 1")
+        elif max_count > 16:
+            print("max_count must less than 16")
+
+        print("WARRNING: max_count could not be so large, else will time-consuming")
+
+        for i in trange(1, max_count):
+            pass
 
     def attack_7z(self, file_path, max_count):
-        pass
+        if max_count <= 1:
+            print("max_count must greater than 1")
+        elif max_count > 16:
+            print("max_count must less than 16")
+
+        print("WARRNING: max_count could not be so large, else will time-consuming")
+
+        for i in trange(1, max_count):
+            pass
