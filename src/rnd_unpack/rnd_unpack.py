@@ -60,7 +60,6 @@ class RndUnpack():
                     return
                 except:
                     pass
-                    
 
     def attack_zip(self, file_path, max_count):
         if max_count <= 1:
@@ -71,7 +70,15 @@ class RndUnpack():
         print("WARRNING: max_count could not be so large, else will time-consuming")
 
         for i in trange(1, max_count):
-            pass
+            li = self.generate_passwords(i)
+            for pwd in li:
+                try:
+                    with ZipFile(file_path, 'r') as zip_ref:
+                        zip_ref.extractall(pwd=pwd)
+                    print("Found password:" + pwd)
+                    break
+                except Exception as e:
+                    pass
 
     def attack_7z(self, file_path, max_count):
         if max_count <= 1:
@@ -82,4 +89,12 @@ class RndUnpack():
         print("WARRNING: max_count could not be so large, else will time-consuming")
 
         for i in trange(1, max_count):
-            pass
+            li = self.generate_passwords(i)
+            for pwd in li:
+                try:
+                    with py7zr.SevenZipFile(file_path, mode='r', password=pwd) as z:
+                        z.extractall()
+                    print("Found password:" + pwd)
+                    break
+                except Exception as e:
+                    pass
