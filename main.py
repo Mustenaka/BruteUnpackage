@@ -1,3 +1,4 @@
+import argparse
 import os
 os.environ.setdefault(
         "UNRAR_LIB_PATH", "/Users/andrew/Projects/PythonProjects/Tools/brute_force_unpackage/rarlib/libunrar.so")
