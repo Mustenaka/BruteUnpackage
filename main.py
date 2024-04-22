@@ -1,3 +1,4 @@
+from src.rnd_unpack.rnd_unpack import RndUnpack
 from src.dic_unpack.dic_unpack import DicUnpack
 import argparse
 import os
@@ -16,11 +17,11 @@ def arg_resolving():
     # add optional param
     # use password dictionary
     parser.add_argument(
-        '-d', dest='dic',
+        '-d', '--dic',
         help="use password dictionary, false is not use, true is use dictionary",
         action='store_true')
     parser.add_argument(
-        '-p', '--path',
+        '-p', '--dicpath',
         help="dictionary path, default is inner dictionary, path should be a folder",
         default="password_list")
 
@@ -45,6 +46,10 @@ def arg_resolving():
         '-s', '--simbol',
         help="generated using special simbol",
         action='store_true')
+    parser.add_argument(
+        '-m', '--max',
+        help="generated using special simbol",
+        default=8, type=int)
 
     # thread
     parser.add_argument(
@@ -62,9 +67,6 @@ def main(args):
     file_path = args.file
     print("unpackage file path" + file_path)
 
-    print("test:" + str(args.dic))
-    print("test2:" + args.path)
-
     # open file
     if not os.path.isfile(file_path):
         print("package file does not exist.")
@@ -75,16 +77,31 @@ def main(args):
     # if use password list path.
     if args.dic:
         dicunpack = DicUnpack(dic_path=args.path)
+        print("password library path:" + args.path)
+
         if file_extension == ".rar":
             dicunpack.attack_rar(file_path=file_path)
         elif file_extension == ".zip":
             dicunpack.attack_zip(file_path=file_path)
         elif file_extension == ".7z":
             dicunpack.attack_7z(file_path=file_path)
-    
+
     # if use generate password
     if args.brust:
-        pass
+        rndunpack = RndUnpack(
+            include_lower_letter=args.lowercase,
+            include_upper_letter=args.uppercase,
+            include_number=args.number,
+            include_speical=args.simbol,
+        )
+        max_length = args.max
+
+        if file_extension == ".rar":
+            rndunpack.attack_rar(file_path=file_path, max_count=max_length)
+        elif file_extension == ".zip":
+            rndunpack.attack_zip(file_path=file_path, max_count=max_length)
+        elif file_extension == ".7z":
+            rndunpack.attack_7z(file_path=file_path, max_count=max_length)
 
 
 if __name__ == "__main__":
