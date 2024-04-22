@@ -1,10 +1,10 @@
-from src.rnd_unpack.rnd_unpack import RndUnpack
-from src.dic_unpack.dic_unpack import DicUnpack
+
 import argparse
 import os
 os.environ.setdefault(
     "UNRAR_LIB_PATH", "/Users/andrew/Projects/PythonProjects/Tools/brute_force_unpackage/rarlib/libunrar.so")
-
+from src.rnd_unpack.rnd_unpack import RndUnpack
+from src.dic_unpack.dic_unpack import DicUnpack
 
 def arg_resolving():
     # create ArgumentParser object
