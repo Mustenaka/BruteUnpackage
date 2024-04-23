@@ -36,9 +36,10 @@ class DicUnpack(Singleton):
         for line in tbar:
             tbar.set_description('Processing ' + line)
             try:
-                file = rarfile.RarFile(file_path, 'r', pwd=line)
+                with rarfile.RarFile(file_path) as rf:
+                    rf.extractall(pwd=line)
                 print("Found password:" + line)
-                break
+                return
             except:
                 pass
 

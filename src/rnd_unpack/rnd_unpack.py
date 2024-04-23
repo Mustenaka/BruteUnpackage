@@ -24,18 +24,18 @@ class RndUnpack():
         self.include_speical = include_speical
 
         if include_upper_letter:
-            self.lib_runtime.append(self.lib_upper_letter)
+            self.lib_runtime = self.lib_runtime + self.lib_upper_letter
 
         if include_lower_letter:
-            self.lib_runtime.append(self.lib_lower_letter)
+            self.lib_runtime = self.lib_runtime + self.lib_lower_letter
 
         if include_number:
-            self.lib_runtime.append(self.lib_number)
+            self.lib_runtime = self.lib_runtime + self.lib_number
 
         if include_speical:
-            self.lib_runtime.append(self.lib_speical)
+            self.lib_runtime = self.lib_runtime + self.lib_speical
 
-        print("rnd init, Lib:" + self.lib_runtime)
+        print("Random password by:" + self.lib_runtime)
 
     def generate_passwords(self, n) -> list:
         # 使用itertools.product生成所有可能的排列组合
@@ -53,9 +53,12 @@ class RndUnpack():
 
         for i in trange(1, max_count):
             li = self.generate_passwords(i)
-            for pwd in li:
+            tbar = tqdm(li)
+            for pwd in tbar:
+                tbar.set_description('Processing ' + pwd)
                 try:
-                    file = rarfile.RarFile(file_path, 'r', pwd=pwd)
+                    with rarfile.RarFile(file_path) as rf:
+                        rf.extractall(pwd=pwd)
                     print("Found password:" + pwd)
                     return
                 except:
@@ -71,7 +74,9 @@ class RndUnpack():
 
         for i in trange(1, max_count):
             li = self.generate_passwords(i)
-            for pwd in li:
+            tbar = tqdm(li)
+            for pwd in tbar:
+                tbar.set_description('Processing ' + pwd)
                 try:
                     with ZipFile(file_path, 'r') as zip_ref:
                         zip_ref.extractall(pwd=pwd)
@@ -90,7 +95,9 @@ class RndUnpack():
 
         for i in trange(1, max_count):
             li = self.generate_passwords(i)
-            for pwd in li:
+            tbar = tqdm(li)
+            for pwd in tbar:
+                tbar.set_description('Processing ' + pwd)
                 try:
                     with py7zr.SevenZipFile(file_path, mode='r', password=pwd) as z:
                         z.extractall()
