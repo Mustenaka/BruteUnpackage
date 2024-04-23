@@ -1,10 +1,8 @@
-
+from src.dic_unpack.dic_unpack import DicUnpack
+from src.rnd_unpack.rnd_unpack import RndUnpack
 import argparse
 import os
-os.environ.setdefault(
-    "UNRAR_LIB_PATH", "/Users/andrew/Projects/PythonProjects/Tools/brute_force_unpackage/rarlib/libunrar.so")
-from src.rnd_unpack.rnd_unpack import RndUnpack
-from src.dic_unpack.dic_unpack import DicUnpack
+
 
 def arg_resolving():
     # create ArgumentParser object
@@ -65,7 +63,7 @@ def arg_resolving():
 def main(args):
     # 解析命令行参数
     file_path = args.file
-    print("unpackage file path" + file_path)
+    print("unpackage file path:" + file_path)
 
     # open file
     if not os.path.isfile(file_path):
@@ -76,8 +74,8 @@ def main(args):
 
     # if use password list path.
     if args.dic:
-        dicunpack = DicUnpack(dic_path=args.path)
-        print("password library path:" + args.path)
+        dicunpack = DicUnpack(dic_path=args.dicpath)
+        print("password library path:" + args.dicpath)
 
         if file_extension == ".rar":
             dicunpack.attack_rar(file_path=file_path)
