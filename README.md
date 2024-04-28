@@ -56,12 +56,22 @@ python brute_force_unpack.py [-h] [-d] [-p DICPATH] [-b] [-u] [-l] [-n] [-s] [-m
 
 ### script run
 
-在对应的操作系统使用脚本运行
+如果你懒，不想去配置文件，可以生成了.so文件或者.dll文件之后，在对应的操作系统使用脚本直接运行
+
+If you are lazy boy and don't want to go to the configuration file, you can generate a.so file or.dll file and run it directly in the corresponding operating system using this script
 
 #### Windows：
 
+Bat
+
 ```
 start run.bat
+```
+
+Powershell
+
+```
+./run.ps1
 ```
 
 #### Linux | macOS:
@@ -76,6 +86,12 @@ start run.bat
 - rarlib: unrar so|dll文件，目前只有m1 macOS平台编译版本，待更新，需要补充和script脚本组合
 - src: 源代码
 - main.py 主运行代码
+
+### Unrar | Unrar
+
+关于Unrar的安装，如果你感兴趣，可以看一下我的博客的这篇文章：
+
+https://www.mustenaka.cn/index.php/2024/03/28/macosinstallunrarrarunpackagesoftware/
 
 ## Contribution | 贡献
 
