@@ -89,7 +89,7 @@ Powershell
 
 ### Unrar | Unrar
 
-关于Unrar的安装，如果你感兴趣，可以看一下我的博客的这篇文章：
+关于Unrar的macOS平台的安装，如果你感兴趣，可以看一下我的博客的这篇文章：
 
 https://www.mustenaka.cn/index.php/2024/03/28/macosinstallunrarrarunpackagesoftware/
 
