@@ -2,6 +2,8 @@
 
 A powerful and efficient tool for brute-force password cracking of compressed archives. Supports ZIP, RAR, and 7Z formats with both dictionary-based and brute-force attack modes.
 
+English | [简体中文](README_zh_CN.md)
+
 ## ✨ Features
 
 - **Multiple Archive Formats**: Full support for RAR, ZIP, and 7Z archives
