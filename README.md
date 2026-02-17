@@ -1,99 +1,325 @@
-# BruteUnpackage | 暴力破解压缩包密码
+# Brute Force Unpackage | 暴力破解压缩包密码
 
-暴力破解压缩包密码，支持zip, rar 等主流压缩包工具（纯代码版），内置一个常见密码压缩表，密码表用尽后启动随机数便利，最大支持密码位数为16，自动从小开始向大破解，支持多线程，具体所需要的破解时间根据密码复杂度。
+A powerful and efficient tool for brute-force password cracking of compressed archives. Supports ZIP, RAR, and 7Z formats with both dictionary-based and brute-force attack modes.
 
-Brute force compression package password, support zip, rar and other mainstream compression package tools (pure code version), built-in a common password compression table, password table exhausted after starting random number convenience, the maximum support password length is 16, automatically from small to large crack, support multi-threading, The time required to crack the password depends on the password complexity. eWEEIt provides flexibility in password cracking methods and supports various types of compressed packages such as RAR, ZIP, and 7z.
+## ✨ Features
 
-### Built-in dictionary |  内置字典
+- **Multiple Archive Formats**: Full support for RAR, ZIP, and 7Z archives
+- **Dual Attack Modes**:
+  - Dictionary-based attacks using password lists
+  - Brute-force attacks with customizable character sets
+- **Multiprocessing Support**: Bypass Python's GIL limitation by using true multiprocessing
+- **Built-in Dictionaries**: Includes comprehensive password dictionaries from SecLists
+- **Flexible Configuration**: Customize character sets, password length, and process count
+- **Progress Tracking**: Real-time progress bars showing attack status
+- **Memory Efficient**: Optimized to handle large password lists and brute-force ranges
 
-reference: https://github.com/danielmiessler/SecLists/tree/master
+## 🎯 How It Works
 
-### Environment｜环境
+### Dictionary Attack
+Loads password dictionaries from text files and attempts each password sequentially. Supports multiprocessing to distribute password attempts across multiple CPU cores.
 
-#### Clone the repository ｜ 克隆、下载本项目
+### Brute-force Attack
+Generates all possible password combinations from specified character sets (uppercase, lowercase, digits, symbols) up to a maximum length. Processes incrementally from length 1 to max length.
+
+### Multiprocessing
+Instead of using threading (limited by Python's GIL), this tool uses the `multiprocessing` module to create separate processes. Each process handles a chunk of passwords, enabling true parallel execution and maximum CPU utilization.
+
+## 📋 Requirements
+
+- Python 3.7+
+- Required packages (see `requirements.txt`)
+- For RAR support: UnRAR library
+
+## 🚀 Installation
+
+### 1. Clone the Repository
+
+```bash
+git clone https://github.com/Mustenaka/brute_force_unpackage.git
+cd brute_force_unpackage
 ```
-git clone https://github.com/username/repository.git
-```
 
-#### Install dependencies ｜ 安装Python相关依赖环境
+### 2. Install Python Dependencies
 
-```
+```bash
 pip install -r requirements.txt
 ```
 
-#### RAR environment ｜ RAR环境
+### 3. Install UnRAR Library (for RAR support)
 
-需要在RAR安装环境中配置UNRAR_LIB_PATH，MacOS、Linux需要自主编译.so文件，Windows需要配置.dll环境
+#### macOS
+```bash
+# Install using Homebrew
+brew install libunrar
 
-Set the environment variable UNRAR_LIB_PATH to the path of the libunrar.so library. For example:
+# Or compile from source
+wget https://www.rarlab.com/rar/unrarsrc-6.2.12.tar.gz
+tar -xzf unrarsrc-6.2.12.tar.gz
+cd unrar
+make lib
+sudo make install-lib
 
-```
-export UNRAR_LIB_PATH="/path/to/libunrar.so"
-```
-
-### run ｜ 运行
-
-#### Python直接运行
-
-```
-python brute_force_unpack.py [-h] [-d] [-p DICPATH] [-b] [-u] [-l] [-n] [-s] [-m MAX] [-t] file
-```
-
-- `file`: Path to the compressed package file.
-
-##### Optional Arguments ｜ 可选参数（懒得写中文了，自己看）
-
-- `-h, --help`: Show the help message and exit.
-- `-d, --dic`: Use a password dictionary. (Default: false)
-- `-p DICPATH, --dicpath DICPATH`: Specify the path to the password dictionary. (Default: "password_list")
-- `-b, --brust`: Use random password generation. (Default: false)
-- `-u, --uppercase`: Include uppercase letters in generated passwords.
-- `-l, --lowercase`: Include lowercase letters in generated passwords.
-- `-n, --number`: Include numbers in generated passwords.
-- `-s, --simbol`: Include special symbols in generated passwords.
-- `-m MAX, --max MAX`: Specify the maximum length of generated passwords. (Default: 8)
-- `-t, --thread`: Enable multi-threading for faster processing. (Default: false)
-
-### script run
-
-如果你懒，不想去配置文件，可以生成了.so文件或者.dll文件之后，在对应的操作系统使用脚本直接运行
-
-If you are lazy boy and don't want to go to the configuration file, you can generate a.so file or.dll file and run it directly in the corresponding operating system using this script
-
-#### Windows：
-
-Bat
-
-```
-start run.bat
+# Set environment variable
+export UNRAR_LIB_PATH="/usr/local/lib/libunrar.so"
 ```
 
-Powershell
+#### Linux
+```bash
+# Compile from source
+wget https://www.rarlab.com/rar/unrarsrc-6.2.12.tar.gz
+tar -xzf unrarsrc-6.2.12.tar.gz
+cd unrar
+make lib
+sudo make install-lib
 
+# Set environment variable (add to ~/.bashrc or ~/.zshrc)
+export UNRAR_LIB_PATH="/usr/local/lib/libunrar.so"
 ```
+
+#### Windows
+```bash
+# Download UnRAR DLL from https://www.rarlab.com/rar_add.htm
+# Extract UnRAR.dll to your system or project directory
+# Set environment variable
+set UNRAR_LIB_PATH=C:\path\to\UnRAR.dll
+```
+
+## 📖 Usage
+
+### Basic Syntax
+
+```bash
+python main.py <archive_file> [options]
+```
+
+### Command-line Options
+
+#### Required Arguments
+- `file` - Path to the encrypted archive file (RAR/ZIP/7Z)
+
+#### Dictionary Attack Options
+- `-d, --dictionary` - Enable dictionary-based attack mode
+- `-p, --dict-path PATH` - Path to password dictionary directory (default: password_list)
+
+#### Brute-force Attack Options
+- `-b, --brute` - Enable brute-force attack mode
+- `-u, --uppercase` - Include uppercase letters (A-Z) in brute-force
+- `-l, --lowercase` - Include lowercase letters (a-z) in brute-force
+- `-n, --digits` - Include digits (0-9) in brute-force
+- `-s, --symbols` - Include special symbols in brute-force
+- `-m, --max-length N` - Maximum password length for brute-force (default: 8, max: 16)
+
+#### Performance Options
+- `-t, --threads N` - Number of parallel processes to use (default: CPU count)
+  - Set to 1 to disable multiprocessing
+  - Leave empty to use all available CPU cores
+
+### Examples
+
+#### Dictionary Attack (Single Process)
+```bash
+# Use default password lists with single process
+python main.py archive.zip -d -t 1
+```
+
+#### Dictionary Attack (Multiprocessing)
+```bash
+# Use all CPU cores
+python main.py archive.rar -d
+
+# Use specific number of processes
+python main.py archive.7z -d -t 4
+
+# Use custom dictionary path
+python main.py archive.zip -d -p /path/to/custom/dictionaries -t 8
+```
+
+#### Brute-force Attack
+```bash
+# Lowercase + digits, max length 6, multiprocessing
+python main.py archive.zip -b -l -n -m 6
+
+# Uppercase + lowercase + digits, max length 4, 8 processes
+python main.py archive.rar -b -u -l -n -m 4 -t 8
+
+# All character sets, max length 5
+python main.py archive.7z -b -u -l -n -s -m 5
+```
+
+#### Combined Attack
+```bash
+# Try dictionary first, then brute-force if not found
+python main.py archive.rar -d -b -l -n -m 5 -t 4
+```
+
+### Script Runners (Alternative)
+
+For convenience, you can use the provided scripts:
+
+#### Windows
+```bash
+# Batch file
+run.bat
+
+# PowerShell
 ./run.ps1
 ```
 
-#### Linux | macOS:
-
-```
+#### Linux/macOS
+```bash
+chmod +x run.sh
 ./run.sh
 ```
 
-## project struct | 文件结构
+## 🗂️ Project Structure
 
-- password_list: 密码本存储器
-- rarlib: unrar so|dll文件，目前只有m1 macOS平台编译版本，待更新，需要补充和script脚本组合
-- src: 源代码
-- main.py 主运行代码
+```
+brute_force_unpackage/
+├── main.py                          # Main entry point
+├── requirements.txt                 # Python dependencies
+├── README.md                        # This file
+│
+├── src/
+│   ├── core/                        # Core functionality
+│   │   ├── base_attacker.py        # Abstract base class for attacks
+│   │   ├── archive_handlers.py     # Archive format handlers (RAR/ZIP/7Z)
+│   │   └── multiprocess_attacker.py # Multiprocessing implementation
+│   │
+│   ├── attackers/                   # Attack implementations
+│   │   ├── dictionary_attacker.py  # Dictionary-based attack
+│   │   └── bruteforce_attacker.py  # Brute-force attack
+│   │
+│   ├── dic_unpack/                  # Legacy dictionary module (deprecated)
+│   └── rnd_unpack/                  # Legacy random module (deprecated)
+│
+├── password_list/                   # Built-in password dictionaries
+│   ├── Common-Credentials/          # Common passwords
+│   ├── Default-Credentials/         # Default device passwords
+│   ├── Books/                       # Book-based passwords
+│   └── ...                          # More dictionaries
+│
+├── origin_file/                     # Test files for verification
+├── rarlib/                          # UnRAR library binaries
+└── scripts/
+    ├── run.bat                      # Windows batch script
+    ├── run.ps1                      # Windows PowerShell script
+    └── run.sh                       # Linux/macOS shell script
+```
 
-### Unrar | Unrar
+## 🔧 Architecture
 
-关于Unrar的macOS平台的安装，如果你感兴趣，可以看一下我的博客的这篇文章：
-About Unrar's macOS platform installation, if you are interested, check out this post on my blog:
+### Design Patterns
 
-https://www.mustenaka.cn/index.php/2024/03/28/macosinstallunrarrarunpackagesoftware/
+1. **Strategy Pattern**: Different archive formats (RAR, ZIP, 7Z) are handled by separate handler classes implementing a common interface
+2. **Template Method**: Base attacker class provides common attack logic, with specific implementations for dictionary and brute-force modes
+3. **Factory Pattern**: Archive handlers are created based on file extension
 
-## Contribution | 贡献
+### Multiprocessing vs Threading
 
-Mustenaka | https://github.com/Mustenaka
+This tool uses **multiprocessing** instead of threading to overcome Python's Global Interpreter Lock (GIL):
+
+- **Threading**: Limited by GIL, only one thread executes Python code at a time (pseudo-parallelism)
+- **Multiprocessing**: Creates separate Python processes, each with its own interpreter and memory space (true parallelism)
+
+Each worker process:
+1. Receives a chunk of passwords to test
+2. Independently attempts to extract the archive
+3. Reports back when password is found or chunk is exhausted
+
+This approach maximizes CPU utilization and significantly reduces cracking time on multi-core systems.
+
+## 📚 Built-in Dictionaries
+
+This project includes password dictionaries from the [SecLists](https://github.com/danielmiessler/SecLists) project:
+
+- Common passwords (top 100, 1000, 10000, etc.)
+- Default device credentials
+- Year-based passwords (1900-2020)
+- Book titles and variations
+- Leaked password databases
+
+## ⚠️ Performance Considerations
+
+### Dictionary Attacks
+- Loading large dictionaries may take time and memory
+- Multiprocessing is highly effective for dictionary attacks
+- Recommended: Use 4-8 processes for optimal balance
+
+### Brute-force Attacks
+- Complexity grows exponentially with password length
+- Character set size impacts combinations:
+  - Lowercase only (26): 26^n combinations
+  - Lowercase + digits (36): 36^n combinations
+  - All sets (95): 95^n combinations
+- Recommended maximum length: 8-10 characters
+- Always use multiprocessing for brute-force attacks
+
+### Example Timings (approximate)
+- 4-char lowercase+digits: seconds to minutes
+- 6-char lowercase+digits: minutes to hours
+- 8-char lowercase+digits: days to weeks
+- 8-char all sets: months to years
+
+## 🛡️ Legal Disclaimer
+
+**This tool is for educational and authorized security testing purposes only.**
+
+- Only use on archives you own or have explicit permission to test
+- Unauthorized access to computer systems is illegal
+- The authors assume no liability for misuse of this tool
+- Always comply with local laws and regulations
+
+## 🤝 Contributing
+
+Contributions are welcome! Please feel free to submit pull requests or open issues for:
+- Bug fixes
+- Performance improvements
+- New features
+- Documentation updates
+
+## 📄 License
+
+This project is open source. Please check the license file for details.
+
+## 👤 Author
+
+**Mustenaka**
+- GitHub: [@Mustenaka](https://github.com/Mustenaka)
+- Blog: [https://www.mustenaka.cn](https://www.mustenaka.cn)
+
+## 📝 Changelog
+
+### Version 2.0 (Latest)
+- ✨ Complete architecture refactoring with strategy pattern
+- ✨ Implemented true multiprocessing support (bypasses GIL)
+- ✨ Added comprehensive English documentation and comments
+- ✨ Improved command-line argument naming and validation
+- ✨ Progress tracking for multiprocessing mode
+- ✨ Better error handling and user feedback
+- 🐛 Fixed parameter naming (simbol→symbols, brust→brute)
+- 🗑️ Deprecated legacy modules (kept for compatibility)
+
+### Version 1.0 (Original)
+- Basic dictionary attack support
+- Basic brute-force attack support
+- RAR, ZIP, 7Z format support
+- Single-threaded execution
+
+## 🔗 References
+
+- [SecLists Password Dictionaries](https://github.com/danielmiessler/SecLists)
+- [UnRAR Library](https://www.rarlab.com/rar_add.htm)
+- [Python multiprocessing Documentation](https://docs.python.org/3/library/multiprocessing.html)
+
+## 📞 Support
+
+If you encounter issues:
+1. Check that all dependencies are installed
+2. Verify UnRAR library is properly configured
+3. Ensure you have permission to access the archive file
+4. Open an issue on GitHub with detailed error information
+
+---
+
+**⭐ If you find this tool useful, please consider giving it a star on GitHub!**
